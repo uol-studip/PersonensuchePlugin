@@ -1,0 +1,1 @@
+INSERT IGNORE INTO log_actions (action_id, name, description, info_template, active, expires) VALUES ('zt631ea53ff819cfa0dae9f1819a3c4c', 'PERSSU_PERSON_EDITED', 'Personensucheplugin: Benutzerdaten geändert', '%user ändert Daten von %user(%affected) - %info.', 1, NULL);

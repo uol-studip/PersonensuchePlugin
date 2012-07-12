@@ -1,0 +1,6 @@
+pluginclassname=PersonenSuchePlugin
+pluginname=PersonenSuchePlugin
+dbscheme=sql/install.sql
+origin=IBIT
+version=1.5.9
+studipMinVersion=1.11
