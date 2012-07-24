@@ -445,32 +445,31 @@ class PersonenSuchePlugin extends StudIPPlugin implements SystemPlugin
             {
 
             Header('Content-Type: text/xml; charset="UTF-8"');
-			Header('Content-Disposition: attachment; filename=studiumgenerale.xml');
-			Header('Pragma: no-cache');
-			Header('Expires: 0');
-			Header('Content-Encoding: UTF-8');
+            Header('Content-Disposition: attachment; filename=studiumgenerale.xml');
+            Header('Pragma: no-cache');
+            Header('Expires: 0');
+            Header('Content-Encoding: UTF-8');
 
-			$xml .= '<?xml version="1.0" encoding="UTF-8" ?>';
-		    $xml .= '<studip version="2.0">';
-			foreach($veranstaltungen AS $veranstaltung) {
-			    foreach($veranstaltung['institutes'] AS $institut) {
-			        $xml .= '<institut name="'.htmlSpecialChars(utf8_encode($institut['Name'])).'">';
-			        foreach($institut['courses'] AS $seminar) {
-			            // $xml .= '<seminare>';
-			            $xml .= '<veranstaltungsnummer>'.htmlSpecialChars(utf8_encode($seminar['veranstaltungsnummer'])).'</veranstaltungsnummer>';
-			            $anz = 1;
+            $xml .= '<?xml version="1.0" encoding="UTF-8" ?>';
+            $xml .= '<studip version="2.0">';
+            foreach($veranstaltungen AS $veranstaltung) {
+                foreach($veranstaltung['institutes'] AS $institut) {
+                    $xml .= '<institut name="'.htmlSpecialChars(utf8_encode($institut['Name'])).'">';
+                    foreach($institut['courses'] AS $seminar) {
+                        // $xml .= '<seminare>';
+                        $xml .= '<veranstaltungsnummer>'.htmlSpecialChars(utf8_encode($seminar['veranstaltungsnummer'])).'</veranstaltungsnummer>';
+                        $xml .= '<titel>' . htmlSpecialChars(utf8_encode($seminar['name'])) . '</titel>';
+                        $xml .= '<form>' . htmlSpecialChars(utf8_encode($GLOBALS['SEM_TYPE'][$seminar['status']]['name'])) . '</form>';
+                        $anz = 1;
                         foreach($seminar['authors'] as $author) {
-			                $dozenten .= htmlSpecialChars(utf8_encode($author['vorname'])).' '.htmlSpecialChars(utf8_encode($author['name']));
-
+                            $dozenten .= htmlSpecialChars(utf8_encode($author['vorname'])).' '.htmlSpecialChars(utf8_encode($author['name']));
                             if($anz < count($seminar['authors'])) {
                                 $dozenten .= ", ";
                             }
                             $anz++;
                         }
-
                         $xml .= '<dozent>'.$dozenten.'</dozent>';
                         unset($dozenten);
-                        $xml .= '<titel>'.htmlSpecialChars(utf8_encode($seminar['name'])).'</titel>';
                         $xml .= "<termin>".utf8_encode($seminar['times'])."</termin>";
                         $xml .= "<raum>".utf8_encode($seminar['rooms'])."</raum>";
                          if ($request['vdetails'] == 'yes')
